@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PostAuthDto } from './auth.dto';
+import { PostAuthDto } from './dto/post-auth.dto';
 
 @Injectable()
 export class AuthService {

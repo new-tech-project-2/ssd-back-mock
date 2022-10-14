@@ -1,12 +1,13 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { PostAuthDto, PostAuthResult } from './auth.dto';
+
 import { AuthService } from './auth.service';
+import { PostAuthDto, PostAuthResult } from './dto/post-auth.dto';
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly initService: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post()
   postAuth(@Body() dto: PostAuthDto): PostAuthResult {
-    return this.initService.check(dto);
+    return this.authService.check(dto);
   }
 }
