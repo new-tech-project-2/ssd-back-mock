@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { DrinkerDto } from './drinker.dto';
+import { DrinkerDto } from './dto/drinker.dto';
 @Schema()
 export class Drinker extends Document {
   @Prop({ required: true, unique: true, _id: true })

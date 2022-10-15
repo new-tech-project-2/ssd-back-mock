@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Drinker } from 'src/drinker/drinker.schema';
-import { CreateDrinkerDto, DrinkerDto } from './drinker.dto';
+import { CreateDrinkerDto, DrinkerDto } from './dto/drinker.dto';
 
 @Injectable()
 export class DrinkerRepository {
@@ -14,8 +14,13 @@ export class DrinkerRepository {
     return await this.drinkerModel.create(createDrinkerDto);
   }
   async getAll(dispenserId: string): Promise<Array<DrinkerDto>> {
-    return await (
-      await this.drinkerModel.find({ dispenserId: dispenserId })
-    ).map((drinker) => drinker.protectedData);
+    return (await this.drinkerModel.find({ dispenserId: dispenserId })).map(
+      (drinker) => drinker.protectedData
+    );
+  }
+
+  async delete(drinkerId: string): Promise<boolean> {
+    const result = await this.drinkerModel.deleteOne({ id: drinkerId });
+    return result.deletedCount === 1;
   }
 }

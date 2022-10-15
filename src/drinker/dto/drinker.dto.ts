@@ -1,4 +1,4 @@
-import { Drinker } from './drinker.schema';
+import { Drinker } from '../drinker.schema';
 
 export class DrinkerDto {
   constructor(obj: Drinker) {
