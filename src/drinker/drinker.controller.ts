@@ -1,8 +1,9 @@
-import { Controller, Delete, Get, Param } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
 
 import { DrinkerService } from './drinker.service';
-import { DeleteDrinkResultDto } from './dto/delete-drink-dto';
+import { DrinkerResultDto } from './dto/delete-drinker.dto';
 import { GetDrinkersResultDto } from './dto/drinker.dto';
+import { UpdateDrinkerDto } from './dto/update-drinker.dto';
 
 @Controller('drinker')
 export class DrinkerController {
@@ -21,7 +22,18 @@ export class DrinkerController {
   @Delete(':drinkerId')
   async deleteDrinker(
     @Param('drinkerId') drinkerId: string
-  ): Promise<DeleteDrinkResultDto> {
+  ): Promise<DrinkerResultDto> {
     return await this.drinkerService.deleteDrinkerByDrinkerId(drinkerId);
+  }
+
+  @Patch(':drinkerId')
+  async updateDrinker(
+    @Param('drinkerId') drinkerId: string,
+    @Body() updateDrinkerDto: UpdateDrinkerDto
+  ): Promise<DrinkerResultDto> {
+    return await this.drinkerService.updateDrinkerByDrinkerId(
+      drinkerId,
+      updateDrinkerDto
+    );
   }
 }

@@ -8,6 +8,8 @@ import { PingController } from './ping/ping.controller';
 import { SocketGateway } from './socket/socket.gateway';
 import { UsersModule } from './users/users.module';
 import { DispensersModule } from './dispensers/dispensers.module';
+import { UserSocketGateway } from './user-socket.gateway';
+import { DispenserSocketGateway } from './dispenser-socket.gateway';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,6 +30,6 @@ import { DispensersModule } from './dispensers/dispensers.module';
     DispensersModule,
   ],
   controllers: [PingController],
-  providers: [SocketGateway],
+  providers: [SocketGateway, UserSocketGateway, DispenserSocketGateway],
 })
 export class AppModule {}

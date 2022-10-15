@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Drinker } from 'src/drinker/drinker.schema';
 import { CreateDrinkerDto, DrinkerDto } from './dto/drinker.dto';
+import { UpdateDrinkerDto } from './dto/update-drinker.dto';
 
 @Injectable()
 export class DrinkerRepository {
@@ -22,5 +23,15 @@ export class DrinkerRepository {
   async delete(drinkerId: string): Promise<boolean> {
     const result = await this.drinkerModel.deleteOne({ id: drinkerId });
     return result.deletedCount === 1;
+  }
+  async update(
+    drinkerId: string,
+    updateDrinkerDto: UpdateDrinkerDto
+  ): Promise<boolean> {
+    await this.drinkerModel.findOneAndUpdate({
+      id: drinkerId,
+      updateDrinkerDto,
+    });
+    return true;
   }
 }
