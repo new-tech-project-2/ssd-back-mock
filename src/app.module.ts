@@ -5,11 +5,10 @@ import { AuthModule } from './auth/auth.module';
 import { DrinkerModule } from './drinker/drinker.module';
 import { MongodbConfigService } from './mongodb/mongodb.config.service';
 import { PingController } from './ping/ping.controller';
-import { SocketGateway } from './socket/socket.gateway';
-import { UsersModule } from './users/users.module';
+
 import { DispensersModule } from './dispensers/dispensers.module';
-import { UserSocketGateway } from './user-socket.gateway';
-import { DispenserSocketGateway } from './dispenser-socket.gateway';
+import { SocketModule } from './socket/socket.module';
+import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,8 +27,9 @@ import { DispenserSocketGateway } from './dispenser-socket.gateway';
     DrinkerModule,
     UsersModule,
     DispensersModule,
+    SocketModule,
   ],
   controllers: [PingController],
-  providers: [SocketGateway, UserSocketGateway, DispenserSocketGateway],
+  providers: [],
 })
 export class AppModule {}

@@ -1,33 +1,20 @@
 import {
-  OnGatewayConnection,
-  OnGatewayDisconnect,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { sleep } from 'src/common/utils/sleep';
-import { Server } from 'ws';
+import { Server } from 'socket.io';
+import { SocketAuthDto } from './dto/socket-auth.dto';
+import { SocketService } from './socket.service';
 
 @WebSocketGateway({ path: '/socket/user' })
-export class UserSocketGateway
-  implements OnGatewayConnection, OnGatewayDisconnect
-{
+export class UserSocketGateway {
+  constructor(private socketService: SocketService) {}
   @WebSocketServer()
   server: Server;
 
-  async handleConnection(client: WebSocket) {
-    for (let i = 0; i < 3; i += 1) {
-      await sleep(1000);
-      client.send('asdasd');
-    }
-  }
-  handleDisconnect(client: WebSocket) {
-    throw new Error('Method not implemented.');
-  }
-
-  @SubscribeMessage('message')
-  onEvent(client, data: any): string {
-    console.log(client, data);
-    return 'hello';
+  @SubscribeMessage('auth')
+  onEvent(client, data: SocketAuthDto): void {
+    this.socketService.addUserSocket(client, data.dispenserToken);
   }
 }
