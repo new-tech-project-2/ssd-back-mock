@@ -6,9 +6,7 @@ import { DrinkerModule } from './drinker/drinker.module';
 import { MongodbConfigService } from './mongodb/mongodb.config.service';
 import { PingController } from './ping/ping.controller';
 
-import { DispensersModule } from './dispensers/dispensers.module';
 import { SocketModule } from './socket/socket.module';
-import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -25,8 +23,6 @@ import { UsersModule } from './users/users.module';
     }),
     AuthModule,
     DrinkerModule,
-    UsersModule,
-    DispensersModule,
     SocketModule,
   ],
   controllers: [PingController],

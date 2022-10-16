@@ -1,3 +1,4 @@
+import { forwardRef, Inject } from '@nestjs/common';
 import {
   SubscribeMessage,
   WebSocketGateway,
@@ -9,7 +10,10 @@ import { SocketService } from './socket.service';
 
 @WebSocketGateway({ path: '/socket/user' })
 export class UserSocketGateway {
-  constructor(private socketService: SocketService) {}
+  constructor(
+    @Inject(forwardRef(() => SocketService))
+    private socketService: SocketService
+  ) {}
   @WebSocketServer()
   server: Server;
 
