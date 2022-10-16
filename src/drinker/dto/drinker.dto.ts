@@ -17,8 +17,8 @@ export class DrinkerDto {
   lastDrinkTimestamp: number;
 }
 
-export class GetDrinkersDto {
-  dispenserId: string;
+export class DrinkersDto {
+  dispenserToken: string;
 }
 
 export class GetDrinkersResultDto {
@@ -27,10 +27,10 @@ export class GetDrinkersResultDto {
 
 export class CreateDrinkerDto {
   id: string;
-  totalCapacity: number;
-  currentDrinks: number;
+  totalCapacity?: number;
+  currentDrinks?: number;
   name: string;
   detail: string;
-  lastDrinkTimestamp: number;
-  dispenserId: string;
+  lastDrinkTimestamp?: number;
+  dispenserToken: string;
 }

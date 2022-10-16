@@ -17,7 +17,7 @@ export class Drinker extends Document {
   lastDrinkTimestamp: number;
 
   @Prop({ required: true, type: Types.ObjectId, ref: 'id' })
-  dispenserId: string;
+  dispenserToken: string;
 
   readonly protectedData: DrinkerDto;
 }
@@ -25,6 +25,5 @@ export class Drinker extends Document {
 export const DrinkerSchema = SchemaFactory.createForClass(Drinker);
 
 DrinkerSchema.virtual('protectedData').get(function (this: Drinker) {
-  console.log(this);
   return new DrinkerDto(this);
 });

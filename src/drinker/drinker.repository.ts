@@ -8,15 +8,15 @@ import { UpdateDrinkerDto } from './dto/update-drinker.dto';
 @Injectable()
 export class DrinkerRepository {
   constructor(
-    @InjectModel(Drinker.name) private readonly drinkerModel: Model<Drinker>
+    @InjectModel(Drinker.name) private readonly drinkerModel: Model<Drinker>,
   ) {}
 
   async create(createDrinkerDto: CreateDrinkerDto): Promise<Drinker> {
     return await this.drinkerModel.create(createDrinkerDto);
   }
   async getAll(dispenserId: string): Promise<Array<DrinkerDto>> {
-    return (await this.drinkerModel.find({ dispenserId: dispenserId })).map(
-      (drinker) => drinker.protectedData
+    return (await this.drinkerModel.find({ dispenserToken: dispenserId })).map(
+      (drinker) => drinker.protectedData,
     );
   }
 
@@ -26,7 +26,7 @@ export class DrinkerRepository {
   }
   async update(
     drinkerId: string,
-    updateDrinkerDto: UpdateDrinkerDto
+    updateDrinkerDto: UpdateDrinkerDto,
   ): Promise<boolean> {
     await this.drinkerModel.findOneAndUpdate({
       id: drinkerId,
