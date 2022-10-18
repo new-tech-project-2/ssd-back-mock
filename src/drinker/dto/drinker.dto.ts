@@ -17,7 +17,7 @@ export class DrinkerDto {
   lastDrinkTimestamp: number;
 }
 
-export class DrinkersDto {
+export class DrinkerAuthDto {
   dispenserToken: string;
 }
 

@@ -1,24 +1,28 @@
 import { forwardRef, Inject } from '@nestjs/common';
 import {
-  SubscribeMessage,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
   WebSocketGateway,
-  WebSocketServer,
+  WebSocketServer
 } from '@nestjs/websockets';
-import { Server } from 'socket.io';
-import { SocketAuthDto } from './dto/socket-auth.dto';
+import { Server, Socket } from 'socket.io';
 import { SocketService } from './socket.service';
 
 @WebSocketGateway({ path: '/socket/user' })
-export class UserSocketGateway {
+export class UserSocketGateway
+  implements OnGatewayConnection, OnGatewayDisconnect
+{
   constructor(
     @Inject(forwardRef(() => SocketService))
-    private socketService: SocketService
+    private socketService: SocketService,
   ) {}
   @WebSocketServer()
   server: Server;
 
-  @SubscribeMessage('auth')
-  onEvent(client, data: SocketAuthDto): void {
-    this.socketService.addUserSocket(client, data.dispenserToken);
+  handleConnection(client: Socket) {
+    client.handshake.headers.authorization;
+  }
+  handleDisconnect(client: Socket) {
+    client.disconnect();
   }
 }

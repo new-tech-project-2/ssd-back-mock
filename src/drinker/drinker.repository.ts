@@ -14,10 +14,10 @@ export class DrinkerRepository {
   async create(createDrinkerDto: CreateDrinkerDto): Promise<Drinker> {
     return await this.drinkerModel.create(createDrinkerDto);
   }
-  async getAll(dispenserId: string): Promise<Array<DrinkerDto>> {
-    return (await this.drinkerModel.find({ dispenserToken: dispenserId })).map(
-      (drinker) => drinker.protectedData,
-    );
+  async getAll(dispenserToken: string): Promise<Array<DrinkerDto>> {
+    return (
+      await this.drinkerModel.find({ dispenserToken: dispenserToken })
+    ).map((drinker) => drinker.protectedData);
   }
 
   async delete(drinkerId: string): Promise<boolean> {

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { SocketService } from 'src/socket/socket.service';
 import { DrinkerRepository } from './drinker.repository';
 import { DrinkerResultDto } from './dto/delete-drinker.dto';
-import { DrinkersDto, GetDrinkersResultDto } from './dto/drinker.dto';
+import { DrinkerAuthDto, GetDrinkersResultDto } from './dto/drinker.dto';
 import { UpdateDrinkerDto } from './dto/update-drinker.dto';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class DrinkerService {
     private readonly socketService: SocketService,
   ) {}
   async getDrinkersByDispenserId(
-    drinkersDto: DrinkersDto,
+    drinkersDto: DrinkerAuthDto,
   ): Promise<GetDrinkersResultDto> {
     const { dispenserToken } = drinkersDto;
     const drinkers = await this.drinkerRepository.getAll(dispenserToken);
