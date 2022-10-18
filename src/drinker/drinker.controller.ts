@@ -8,6 +8,7 @@ import {
   Post,
   UseGuards
 } from '@nestjs/common';
+import { SocketService } from 'src/socket/socket.service';
 import { AuthWebGuard } from '../auth/auth-web.guard';
 
 import { DrinkerService } from './drinker.service';
@@ -17,7 +18,10 @@ import { UpdateDrinkerDto } from './dto/update-drinker.dto';
 
 @Controller('drinker')
 export class DrinkerController {
-  constructor(private readonly drinkerService: DrinkerService) {}
+  constructor(
+    private readonly drinkerService: DrinkerService,
+    private readonly socketService: SocketService,
+  ) {}
 
   @UseGuards(AuthWebGuard)
   @Get()
@@ -33,6 +37,7 @@ export class DrinkerController {
     @Param('drinkerId') drinkerId: string,
     @Body() drinkersDto: DrinkerAuthDto,
   ) {
+    this.socketService.changeDrinkerEvent(drinkersDto.dispenserToken);
     return await this.drinkerService.addDriknerTmp(
       drinkerId,
       drinkersDto.dispenserToken,
@@ -46,8 +51,21 @@ export class DrinkerController {
   @Delete(':drinkerId')
   async deleteDrinker(
     @Param('drinkerId') drinkerId: string,
+    @Body() drinkersDto: DrinkerAuthDto,
   ): Promise<DrinkerResultDto> {
+    this.socketService.changeDrinkerEvent(drinkersDto.dispenserToken);
     return await this.drinkerService.deleteDrinkerByDrinkerId(drinkerId);
+  }
+  @UseGuards(AuthWebGuard)
+  @Delete()
+  async deleteAllDrinker(
+    @Param('drinkerId') drinkerId: string,
+    @Body() drinkersDto: DrinkerAuthDto,
+  ): Promise<DrinkerResultDto> {
+    this.socketService.changeDrinkerEvent(drinkersDto.dispenserToken);
+    return await this.drinkerService.deleteAllDrinker(
+      drinkersDto.dispenserToken,
+    );
   }
   @UseGuards(AuthWebGuard)
   @Patch(':drinkerId')

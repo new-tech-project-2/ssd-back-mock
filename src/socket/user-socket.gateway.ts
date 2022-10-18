@@ -20,7 +20,8 @@ export class UserSocketGateway
   server: Server;
 
   handleConnection(client: Socket) {
-    client.handshake.headers.authorization;
+    const authToken = client.handshake.query.authToken.toString();
+    this.socketService.addUserSocket(client, authToken);
   }
   handleDisconnect(client: Socket) {
     client.disconnect();

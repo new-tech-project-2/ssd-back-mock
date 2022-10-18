@@ -1,4 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  UnauthorizedException
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { SocketService } from 'src/socket/socket.service';
 import { verifyDispenserResultDto } from './dto/verify-dispenser.dto';
@@ -7,6 +12,7 @@ import { verifyDispenserResultDto } from './dto/verify-dispenser.dto';
 export class AuthService {
   constructor(
     private jwtService: JwtService,
+    @Inject(forwardRef(() => SocketService))
     private socketService: SocketService,
   ) {}
   /**

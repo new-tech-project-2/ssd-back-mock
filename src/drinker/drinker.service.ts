@@ -29,7 +29,13 @@ export class DrinkerService {
   }
 
   async deleteDrinkerByDrinkerId(drinkerId: string): Promise<DrinkerResultDto> {
-    const result = await this.drinkerRepository.delete(drinkerId);
+    const result = await this.drinkerRepository.deleteByDrinkerId(drinkerId);
+    return { success: result };
+  }
+  async deleteAllDrinker(dispenserToken: string): Promise<DrinkerResultDto> {
+    const result = await this.drinkerRepository.deleteByDispenserId(
+      dispenserToken,
+    );
     return { success: result };
   }
 

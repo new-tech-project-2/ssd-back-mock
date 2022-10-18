@@ -20,9 +20,15 @@ export class DrinkerRepository {
     ).map((drinker) => drinker.protectedData);
   }
 
-  async delete(drinkerId: string): Promise<boolean> {
+  async deleteByDrinkerId(drinkerId: string): Promise<boolean> {
     const result = await this.drinkerModel.deleteOne({ id: drinkerId });
     return result.deletedCount === 1;
+  }
+  async deleteByDispenserId(dispenserToken: string): Promise<boolean> {
+    const result = await this.drinkerModel.deleteMany({
+      dispenserToken: dispenserToken,
+    });
+    return result.deletedCount > 1;
   }
   async update(
     drinkerId: string,
