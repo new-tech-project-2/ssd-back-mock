@@ -10,14 +10,7 @@ import { PingController } from './ping/ping.controller';
 import { SocketModule } from './socket/socket.module';
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      envFilePath:
-        process.env.NODE_ENV === 'production'
-          ? '.production.env'
-          : process.env.NODE_ENV === 'stage'
-          ? '.stage.env'
-          : '.development.env',
-    }),
+    ConfigModule.forRoot(),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useClass: MongodbConfigService,

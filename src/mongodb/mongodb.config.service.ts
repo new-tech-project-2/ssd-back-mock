@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   MongooseModuleOptions,
-  MongooseOptionsFactory,
+  MongooseOptionsFactory
 } from '@nestjs/mongoose';
 
 @Injectable()
@@ -14,6 +14,8 @@ export class MongodbConfigService implements MongooseOptionsFactory {
     return {
       uri: this.configService.get<string>('DATABASE_HOST'),
       dbName: this.configService.get<string>('DATABASE_NAME'),
+      user: this.configService.get<string>('DATABBASE_USERNAME'),
+      pass: this.configService.get<string>('DATABBASE_PASSWORD'),
     };
   }
 }
