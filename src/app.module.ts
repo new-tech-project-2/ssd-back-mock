@@ -24,6 +24,6 @@ import { SocketModule } from './socket/socket.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
-    consumer.apply(LoggerMiddleware);
+    consumer.apply(LoggerMiddleware).forRoutes('*');
   }
 }
