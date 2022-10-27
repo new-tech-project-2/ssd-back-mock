@@ -11,7 +11,7 @@ import { DispenserService } from './dispenser.service';
   imports: [
     forwardRef(() => AuthModule),
     MongooseModule.forFeature([{ name: 'Dispenser', schema: DispenserSchema }]),
-    forwardRef(() => SocketModule),
+    SocketModule,
   ],
   providers: [DispenserService, DispenserRepository],
   controllers: [DispenserController],
