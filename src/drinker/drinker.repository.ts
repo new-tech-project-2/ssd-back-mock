@@ -34,10 +34,16 @@ export class DrinkerRepository {
     drinkerId: string,
     updateDrinkerDto: UpdateDrinkerDto,
   ): Promise<boolean> {
-    await this.drinkerModel.findOneAndUpdate({
-      id: drinkerId,
-      updateDrinkerDto,
-    });
+    await this.drinkerModel.findOneAndUpdate(
+      {
+        id: drinkerId,
+      },
+      {
+        $set: {
+          ...updateDrinkerDto,
+        },
+      },
+    );
     return true;
   }
 }

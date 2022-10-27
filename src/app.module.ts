@@ -8,6 +8,7 @@ import { LoggerMiddleware } from './middlewares/logger';
 import { MongodbConfigService } from './mongodb/mongodb.config.service';
 import { PingController } from './ping/ping.controller';
 
+import { DispenserModule } from './dispenser/dispenser.module';
 import { SocketModule } from './socket/socket.module';
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { SocketModule } from './socket/socket.module';
     AuthModule,
     DrinkerModule,
     SocketModule,
+    DispenserModule,
   ],
   controllers: [PingController],
   providers: [],

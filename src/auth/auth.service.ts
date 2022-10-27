@@ -1,27 +1,25 @@
-import {
-  forwardRef,
-  Inject,
-  Injectable,
-  UnauthorizedException
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { SocketService } from 'src/socket/socket.service';
+import { DispenserService } from 'src/dispenser/dispenser.service';
 import { verifyDispenserResultDto } from './dto/verify-dispenser.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     private jwtService: JwtService,
-    @Inject(forwardRef(() => SocketService))
-    private socketService: SocketService,
+    private dispenserService: DispenserService,
   ) {}
   /**
    * 유저가 접속시 디스펜서 토큰이 올바른지를 검증함
    * @param dispenserToken
    * @returns
    */
-  verifyDispenser(dispenserToken: string): verifyDispenserResultDto {
-    const result = this.socketService.verifyDispenser(dispenserToken);
+  async verifyDispenser(
+    dispenserToken: string,
+  ): Promise<verifyDispenserResultDto> {
+    const result = await this.dispenserService.isValidDispenserToken(
+      dispenserToken,
+    );
     if (result === false) {
       return { success: false };
     }
@@ -30,9 +28,11 @@ export class AuthService {
     return { authToken, success: true };
   }
 
-  validateUser(authToken: string): string {
+  async validateUser(authToken: string): Promise<string> {
     const dispenserToken = this.getDispenserToken(authToken);
-    const result = this.socketService.verifyDispenser(dispenserToken);
+    const result = await this.dispenserService.isValidDispenserToken(
+      dispenserToken,
+    );
 
     if (result === false) {
       throw UnauthorizedException;

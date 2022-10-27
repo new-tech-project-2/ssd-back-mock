@@ -1,8 +1,8 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { DispenserModule } from 'src/dispenser/dispenser.module';
 
-import { SocketModule } from '../socket/socket.module';
 import { AuthWebGuard } from './auth-web.guard';
 
 import { AuthController } from './auth.controller';
@@ -10,7 +10,7 @@ import { AuthService } from './auth.service';
 @Module({
   imports: [
     ConfigModule,
-    forwardRef(() => SocketModule),
+    DispenserModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {

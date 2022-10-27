@@ -38,7 +38,7 @@ export class DrinkerController {
     @Body() drinkersDto: DrinkerAuthDto,
   ) {
     this.socketService.changeDrinkerEvent(drinkersDto.dispenserToken);
-    return await this.drinkerService.addDriknerTmp(
+    return await this.drinkerService.addDrinkerTmp(
       drinkerId,
       drinkersDto.dispenserToken,
     );
