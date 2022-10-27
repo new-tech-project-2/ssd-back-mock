@@ -47,7 +47,6 @@ export class SocketService {
 
   changeDrinkerEvent(dispenserToken: string): void {
     const socketId = this.dispenserTokenToSocketIdMap.get(dispenserToken);
-
     this.usersSocketGateway.server.to(socketId).emit('change');
   }
 

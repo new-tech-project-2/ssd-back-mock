@@ -8,7 +8,7 @@ import {
 import { Server, Socket } from 'socket.io';
 import { SocketService } from './socket.service';
 
-@WebSocketGateway({ path: '/socket/user' })
+@WebSocketGateway({ path: '/socket/user', cors: true })
 export class UserSocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
@@ -20,8 +20,12 @@ export class UserSocketGateway
   server: Server;
 
   handleConnection(client: Socket) {
-    const authToken = client.handshake.query.authToken.toString();
-    this.socketService.addUserSocket(client, authToken);
+    try {
+      const authToken = client.handshake.query.authToken.toString();
+      this.socketService.addUserSocket(client, authToken);
+    } catch (e) {
+      client.disconnect();
+    }
   }
   handleDisconnect(client: Socket) {
     client.disconnect();

@@ -8,7 +8,7 @@ import {
 import { Server, Socket } from 'socket.io';
 import { SocketService } from './socket.service';
 
-@WebSocketGateway({ path: '/socket/dispenser' })
+@WebSocketGateway({ path: '/socket/dispenser', cors: true })
 export class DispenserSocketGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
@@ -17,8 +17,12 @@ export class DispenserSocketGateway
     private socketService: SocketService,
   ) {}
   handleConnection(client: Socket) {
-    const dispenserToken = client.handshake.query.dispenserToken.toString();
-    this.socketService.addDispenserSocket(client, dispenserToken);
+    try {
+      const dispenserToken = client.handshake.query.dispenserToken.toString();
+      this.socketService.addDispenserSocket(client, dispenserToken);
+    } catch {
+      client.disconnect();
+    }
   }
   @WebSocketServer()
   server: Server;
