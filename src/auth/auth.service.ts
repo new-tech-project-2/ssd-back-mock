@@ -30,6 +30,9 @@ export class AuthService {
 
   async validateUser(authToken: string): Promise<string> {
     const dispenserToken = this.getDispenserToken(authToken);
+    if (dispenserToken == null) {
+      throw UnauthorizedException;
+    }
     const result = await this.dispenserService.isValidDispenserToken(
       dispenserToken,
     );
@@ -40,9 +43,13 @@ export class AuthService {
     return dispenserToken;
   }
 
-  getDispenserToken(authToken: string): string {
-    const dispenserToken = this.jwtService.verify(authToken);
+  getDispenserToken(authToken: string): string | null {
+    try {
+      const dispenserToken = this.jwtService.verify(authToken);
 
-    return dispenserToken.dispenserToken;
+      return dispenserToken.dispenserToken;
+    } catch {
+      return null;
+    }
   }
 }

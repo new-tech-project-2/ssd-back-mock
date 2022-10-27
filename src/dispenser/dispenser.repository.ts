@@ -64,4 +64,20 @@ export class DispenserRepository {
     );
     return true;
   }
+  async addDispenser(dispenserToken: string, socketId: string): Promise<void> {
+    try {
+      await this.dispenserModel.create({
+        dispenserToken: dispenserToken,
+        socketId: socketId,
+      });
+    } catch {}
+    return;
+  }
+
+  async deleteDispenser(socketId: string): Promise<void> {
+    await this.dispenserModel.deleteOne({
+      socketId: socketId,
+    });
+    return;
+  }
 }

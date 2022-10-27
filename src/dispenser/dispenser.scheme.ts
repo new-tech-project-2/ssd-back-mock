@@ -5,6 +5,8 @@ import { Document } from 'mongoose';
 export class Dispenser extends Document {
   @Prop({ required: true, unique: true, _id: true })
   dispenserToken: string;
+  @Prop({ required: true, unique: true })
+  socketId: string;
   @Prop({ default: false })
   started: boolean;
   @Prop({ default: Date.now() })

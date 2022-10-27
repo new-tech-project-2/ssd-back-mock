@@ -38,4 +38,14 @@ export class DispenserService {
   async isValidDispenserToken(dispenserToken: string): Promise<boolean> {
     return await this.dispenserRepository.isValidDispenserToken(dispenserToken);
   }
+
+  async addDispenser(dispenserToken: string, socketId: string): Promise<void> {
+    await this.dispenserRepository.addDispenser(dispenserToken, socketId);
+    return;
+  }
+
+  async deleteDispenser(dispenserToken: string): Promise<void> {
+    await this.dispenserRepository.deleteDispenser(dispenserToken);
+    return;
+  }
 }
