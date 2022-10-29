@@ -22,7 +22,13 @@ export class DrinkerController {
     private readonly drinkerService: DrinkerService,
     private readonly socketService: SocketService,
   ) {}
-
+  @Patch('/drink')
+  async drinkAllDrinker(
+    @Body() drinkersDto: DrinkerAuthDto,
+  ): Promise<DrinkerResultDto> {
+    this.socketService.changeDrinkerEvent(drinkersDto.dispenserToken);
+    return await this.drinkerService.drinkAllDriker(drinkersDto.dispenserToken);
+  }
   @UseGuards(AuthWebGuard)
   @Get()
   async getDrinkers(
@@ -87,13 +93,5 @@ export class DrinkerController {
   ): Promise<DrinkerResultDto> {
     this.socketService.changeDrinkerEvent(drinkersDto.dispenserToken);
     return await this.drinkerService.updateDrinkDrinkerByDrinkerId(drinkerId);
-  }
-
-  @Patch('/drink')
-  async drinkAllDrinker(
-    @Body() drinkersDto: DrinkerAuthDto,
-  ): Promise<DrinkerResultDto> {
-    this.socketService.changeDrinkerEvent(drinkersDto.dispenserToken);
-    return await this.drinkerService.drinkAllDriker(drinkersDto.dispenserToken);
   }
 }
