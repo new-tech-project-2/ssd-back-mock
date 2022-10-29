@@ -18,9 +18,11 @@ export class DispenserSocketGateway
   ) {}
   handleConnection(client: Socket) {
     try {
+      console.log(client);
       const dispenserToken = client.handshake.query.dispenserToken.toString();
       this.socketService.addDispenserSocket(client, dispenserToken);
-    } catch {
+    } catch (e) {
+      console.log(e);
       client.disconnect();
     }
   }

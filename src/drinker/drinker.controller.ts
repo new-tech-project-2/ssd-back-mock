@@ -73,6 +73,7 @@ export class DrinkerController {
     @Param('drinkerId') drinkerId: string,
     @Body() updateDrinkerDto: UpdateDrinkerDto,
   ): Promise<DrinkerResultDto> {
+    this.socketService.changeDrinkerEvent(updateDrinkerDto.dispenserToken);
     return await this.drinkerService.updateDrinkerByDrinkerId(
       drinkerId,
       updateDrinkerDto,
