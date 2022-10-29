@@ -46,4 +46,28 @@ export class DrinkerRepository {
     );
     return true;
   }
+
+  async updateDrink(drinkerId: string): Promise<boolean> {
+    await this.drinkerModel.findOneAndUpdate(
+      {
+        id: drinkerId,
+      },
+      {
+        $inc: { currentDrinks: 1 },
+      },
+    );
+    return true;
+  }
+
+  async updateAllDrink(dispenserToken: string): Promise<boolean> {
+    await this.drinkerModel.updateMany(
+      {
+        dispenserToken: dispenserToken,
+      },
+      {
+        $inc: { currentDrinks: 1 },
+      },
+    );
+    return true;
+  }
 }

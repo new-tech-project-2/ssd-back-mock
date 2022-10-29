@@ -79,4 +79,21 @@ export class DrinkerController {
       updateDrinkerDto,
     );
   }
+
+  @Patch(':drinkerId/drink')
+  async drinkDrinker(
+    @Param('drinkerId') drinkerId: string,
+    @Body() drinkersDto: DrinkerAuthDto,
+  ): Promise<DrinkerResultDto> {
+    this.socketService.changeDrinkerEvent(drinkersDto.dispenserToken);
+    return await this.drinkerService.updateDrinkDrinkerByDrinkerId(drinkerId);
+  }
+
+  @Patch('/drink')
+  async drinkAllDrinker(
+    @Body() drinkersDto: DrinkerAuthDto,
+  ): Promise<DrinkerResultDto> {
+    this.socketService.changeDrinkerEvent(drinkersDto.dispenserToken);
+    return await this.drinkerService.drinkAllDriker(drinkersDto.dispenserToken);
+  }
 }

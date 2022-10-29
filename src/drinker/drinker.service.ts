@@ -45,4 +45,16 @@ export class DrinkerService {
     );
     return { success: result };
   }
+
+  async updateDrinkDrinkerByDrinkerId(
+    drinkerId: string,
+  ): Promise<DrinkerResultDto> {
+    const result = await this.drinkerRepository.updateDrink(drinkerId);
+    return { success: result };
+  }
+
+  async drinkAllDriker(dispenserToken: string): Promise<DrinkerResultDto> {
+    const result = await this.drinkerRepository.updateAllDrink(dispenserToken);
+    return { success: result };
+  }
 }
