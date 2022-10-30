@@ -2,6 +2,7 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { Socket } from 'socket.io';
 import { AuthService } from 'src/auth/auth.service';
 import { DispenserService } from 'src/dispenser/dispenser.service';
+import { DrinkerService } from 'src/drinker/drinker.service';
 import { DispenserSocketGateway } from './dispenser-socket.gateway';
 import { UserSocketGateway } from './user-socket.gateway';
 
@@ -14,6 +15,7 @@ export class SocketService {
     private usersSocketGateway: UserSocketGateway,
     private authService: AuthService,
     private dispenserService: DispenserService,
+    private drinkerService: DrinkerService,
   ) {}
   private dispenserTokenToSocketIdMap: Map<string, string> = new Map<
     string,
@@ -59,12 +61,14 @@ export class SocketService {
 
   startDispenserEvent(dispenserToken: string): void {
     const socketId = this.dispenserTokenToSocketIdMap.get(dispenserToken);
+    this.drinkerService.resetAllDrikerTimestamp(dispenserToken);
     this.dispenserSocketGateway.server.to(socketId).emit('start');
     this.usersSocketGateway.server.to(socketId).emit('start');
   }
 
   stopDispenserEvent(dispenserToken: string): void {
     const socketId = this.dispenserTokenToSocketIdMap.get(dispenserToken);
+    this.drinkerService.resetAllDrikerDrinks(dispenserToken);
     this.dispenserSocketGateway.server.to(socketId).emit('stop');
     this.usersSocketGateway.server.to(socketId).emit('stop');
   }

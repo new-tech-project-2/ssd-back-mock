@@ -54,6 +54,9 @@ export class DrinkerRepository {
       },
       {
         $inc: { currentDrinks: 1 },
+        $set: {
+          lastDrinkTimestamp: Date.now(),
+        },
       },
     );
     return true;
@@ -66,6 +69,35 @@ export class DrinkerRepository {
       },
       {
         $inc: { currentDrinks: 1 },
+        $set: {
+          lastDrinkTimestamp: Date.now(),
+        },
+      },
+    );
+    return true;
+  }
+  async resetAllDrinkDrinks(dispenserToken: string): Promise<boolean> {
+    await this.drinkerModel.updateMany(
+      {
+        dispenserToken: dispenserToken,
+      },
+      {
+        $set: {
+          currentDrinks: 0,
+        },
+      },
+    );
+    return true;
+  }
+  async resetAllDrinkTimestamps(dispenserToken: string): Promise<boolean> {
+    await this.drinkerModel.updateMany(
+      {
+        dispenserToken: dispenserToken,
+      },
+      {
+        $set: {
+          lastDrinkTimestamp: Date.now(),
+        },
       },
     );
     return true;

@@ -52,7 +52,22 @@ export class DrinkerService {
     const result = await this.drinkerRepository.updateDrink(drinkerId);
     return { success: result };
   }
-
+  async resetAllDrikerDrinks(
+    dispenserToken: string,
+  ): Promise<DrinkerResultDto> {
+    const result = await this.drinkerRepository.resetAllDrinkDrinks(
+      dispenserToken,
+    );
+    return { success: result };
+  }
+  async resetAllDrikerTimestamp(
+    dispenserToken: string,
+  ): Promise<DrinkerResultDto> {
+    const result = await this.drinkerRepository.resetAllDrinkTimestamps(
+      dispenserToken,
+    );
+    return { success: result };
+  }
   async drinkAllDriker(dispenserToken: string): Promise<DrinkerResultDto> {
     const result = await this.drinkerRepository.updateAllDrink(dispenserToken);
     return { success: result };
