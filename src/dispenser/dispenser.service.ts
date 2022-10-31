@@ -46,6 +46,7 @@ export class DispenserService {
 
   async deleteDispenser(dispenserToken: string): Promise<void> {
     await this.dispenserRepository.deleteDispenser(dispenserToken);
+    this.socketService.stopDispenserEvent(dispenserToken);
     return;
   }
 }
